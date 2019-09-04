@@ -18,7 +18,7 @@
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test-without-reporting": "jest --coverage",
     "test-without-coverage": "jest",
-    "prepare": "yarn build"
+    "prepare": "tsc"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
