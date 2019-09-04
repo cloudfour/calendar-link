@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { stringify } from "querystring";
+import { ParsedUrlQueryInput, stringify } from "querystring";
 
 import { CalendarEvent, Google, Outlook, Yahoo } from "./interfaces";
 import { TimeFormats } from './utils'
@@ -35,7 +35,7 @@ export const google = (event: CalendarEvent) => {
   const end: string = dayjs(event.end)
     .utc()
     .format(format);
-  const details: Google = {
+  const details: ParsedUrlQueryInput = {
     action: "TEMPLATE",
     text: event.title,
     details: event.description,
@@ -46,6 +46,7 @@ export const google = (event: CalendarEvent) => {
   if (event.guests && event.guests.length) {
     details.add = event.guests.join();
   }
+
   return `https://calendar.google.com/calendar/render?${stringify(details)}`;
 };
 
@@ -58,7 +59,7 @@ export const outlook = (event: CalendarEvent) => {
   const end: string = dayjs(event.end)
     .utc()
     .format(format);
-  const details: Outlook = {
+  const details: ParsedUrlQueryInput = {
     path: "/calendar/action/compose",
     rru: "addevent",
     startdt: start,
@@ -79,7 +80,7 @@ export const yahoo = (event: CalendarEvent) => {
   const end: string = dayjs(event.end)
     .utc()
     .format(format);
-  const details: Yahoo = {
+  const details: ParsedUrlQueryInput = {
     v: 60,
     title: event.title,
     st: start,
